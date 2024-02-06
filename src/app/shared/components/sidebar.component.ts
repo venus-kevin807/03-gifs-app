@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { GifsService } from '../../gifs/services/gifs.service';
 
 @Component({
@@ -8,10 +8,21 @@ import { GifsService } from '../../gifs/services/gifs.service';
 })
 export class SidebarComponent {
 
+  @ViewChild('txtTagBtn')
+  public TagBtn!: ElementRef<HTMLInputElement>;
+
   constructor(
     private GifsService: GifsService
   ){}
-  get tags(){
+
+  get tags(): string[]{
     return this.GifsService.tagHistory;
+  }
+
+  searchTag(tag: string) {
+    this.GifsService.searchTag(tag);
+
+    this.TagBtn.nativeElement.value = '';
+
   }
 }
